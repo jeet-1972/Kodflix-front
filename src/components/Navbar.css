@@ -47,6 +47,22 @@
   cursor: pointer;
 }
 
+.navbar__button {
+  padding: 0.35rem 0.8rem;
+  border-radius: 0.25rem;
+  border: none;
+  background-color: #e50914;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.navbar__button:hover {
+  background-color: #f40612;
+}
+
 @media (max-width: 768px) {
   .navbar {
     padding: 0 1rem;

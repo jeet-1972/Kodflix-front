@@ -1,8 +1,17 @@
 import React from 'react';
-
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext.jsx';
 import './Navbar.css';
 
 function Navbar() {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login', { replace: true });
+  };
+
   return (
     <header className="navbar">
       <div className="navbar__logo">KODFLIX</div>
@@ -14,7 +23,9 @@ function Navbar() {
       </nav>
       <div className="navbar__actions">
         <span className="navbar__icon">🔍</span>
-        <span className="navbar__icon">👤</span>
+        <button type="button" className="navbar__button" onClick={handleLogout}>
+          Sign out
+        </button>
       </div>
     </header>
   );

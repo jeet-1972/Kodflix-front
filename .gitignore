@@ -4,3 +4,8 @@ dist
 .DS_Store
 Thumbs.db
 
+# Environment - do not commit secrets or production URLs
+.env
+.env.local
+.env.*.local
+
