@@ -8,7 +8,35 @@ import React, {
 
 const AuthContext = createContext(null);
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+// Determine a sensible API base URL for both local dev and production.
+// - Prefer VITE_API_BASE_URL when provided (local .env or Vercel env).
+// - Fallbacks:
+//   - localhost → http://localhost:5000
+//   - kodflix-front.vercel.app → https://kodflix-back.vercel.app
+//   - otherwise use current origin (same domain backend).
+function resolveApiBaseUrl() {
+  if (import.meta.env.VITE_API_BASE_URL) {
+    return import.meta.env.VITE_API_BASE_URL;
+  }
+
+  if (typeof window === 'undefined') {
+    return 'http://localhost:5000';
+  }
+
+  const { origin, hostname } = window.location;
+
+  if (hostname === 'localhost' || hostname === '127.0.0.1') {
+    return 'http://localhost:5000';
+  }
+
+  if (hostname === 'kodflix-front.vercel.app') {
+    return 'https://kodflix-back.vercel.app';
+  }
+
+  return origin;
+}
+
+const API_BASE_URL = resolveApiBaseUrl();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
